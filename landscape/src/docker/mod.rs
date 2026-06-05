@@ -1,8 +1,8 @@
 use bollard::{
+    config::{ContainerSummary, EventMessageTypeEnum},
     query_parameters::{
         EventsOptions, InspectContainerOptions, InspectNetworkOptions, ListContainersOptions,
     },
-    secret::{ContainerSummary, EventMessageTypeEnum},
     Docker,
 };
 use landscape_common::docker::DockerTargetEnroll;
@@ -349,7 +349,7 @@ pub async fn accept_docker_info(
 pub async fn handle_event(
     ip_route_service: &IpRouteService,
     docker: &Docker,
-    emsg: bollard::secret::EventMessage,
+    emsg: bollard::config::EventMessage,
 ) {
     match emsg.typ {
         Some(EventMessageTypeEnum::CONTAINER) => {
@@ -402,16 +402,16 @@ pub async fn handle_event(
 
             match action.as_str() {
                 "create" => {
-                    let Ok(net_info) =
+                    let Ok(net_inspect) =
                         docker.inspect_network(&net_id, None::<InspectNetworkOptions>).await
                     else {
                         return;
                     };
 
                     // println!("net_info: {:?}", net_info);
-                    if let Some(network_info) = network::convert_network(net_info) {
-                        if let Some(info) = network_info.convert_to_lan_info() {
-                            ip_route_service.insert_ipv4_lan_route(&network_info.id, info).await;
+                    if let Some(network) = network::convert_network_inspect(net_inspect) {
+                        if let Some(info) = network.convert_to_lan_info() {
+                            ip_route_service.insert_ipv4_lan_route(&network.id, info).await;
                         }
                     }
                 }

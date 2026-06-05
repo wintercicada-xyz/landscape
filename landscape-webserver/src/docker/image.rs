@@ -1,6 +1,6 @@
 use crate::LandscapeApp;
 use axum::extract::{Path, State};
-use bollard::{query_parameters::ListImagesOptions, secret::ImageSummary, Docker};
+use bollard::{models::ImageSummary, query_parameters::ListImagesOptions, Docker};
 use landscape_common::api_response::LandscapeApiResp as CommonApiResp;
 use landscape_common::docker::image::{PullImageReq, PullImgTask};
 use utoipa_axum::router::OpenApiRouter;

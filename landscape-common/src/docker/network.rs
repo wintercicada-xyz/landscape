@@ -11,7 +11,6 @@ pub struct LandscapeDockerNetwork {
     pub id: String,
     #[cfg_attr(feature = "openapi", schema(nullable = false))]
     pub driver: Option<String>,
-    pub containers: HashMap<String, LandscapeDockerNetworkContainer>,
     pub iface_name: String,
     pub options: HashMap<String, String>,
     #[cfg_attr(feature = "openapi", schema(nullable = false))]

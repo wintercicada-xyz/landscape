@@ -1,11 +1,11 @@
 use axum::extract::{Path, State};
 
 use bollard::{
+    models::{ContainerCreateBody, ContainerSummary},
     query_parameters::{
         CreateContainerOptions, ListContainersOptions, RemoveContainerOptions,
         StartContainerOptions, StopContainerOptions,
     },
-    secret::{ContainerCreateBody, ContainerSummary},
     Docker,
 };
 

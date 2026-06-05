@@ -2,8 +2,8 @@ use std::collections::HashMap;
 use std::collections::VecDeque;
 use std::sync::Arc;
 
+use bollard::config::CreateImageInfo;
 use bollard::query_parameters::CreateImageOptions;
-use bollard::secret::CreateImageInfo;
 use bollard::Docker;
 use tokio::sync::broadcast;
 use tokio::sync::RwLock;
@@ -117,7 +117,6 @@ impl PullManager {
                     Ok(CreateImageInfo {
                         id: Some(layer_id),
                         status: Some(_),
-                        progress: Some(_),
                         progress_detail: Some(progress_detail),
                         ..
                     }) => {
